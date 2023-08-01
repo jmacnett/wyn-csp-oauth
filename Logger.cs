@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 
-namespace SqlDBSecurityProvider
+namespace OAuthAPISecurityProvider
 {
 	public static class Logger
 	{

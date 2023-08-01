@@ -1,10 +1,12 @@
-﻿namespace SqlDBSecurityProvider
+﻿namespace OAuthAPISecurityProvider
 {
 	public static class Consts
 	{
-		public static readonly string ProviderName = "SqlDBSecurityProvider";
-		public static readonly string ProviderDescription = "Sample security provider with SQL database as the user information data store.";
+		// should match the SystemConfig/Services/Server/Authentication/SSO/Scheme value used in Wyn.conf(??)
+		public static readonly string ProviderName = "AzureAD B2C";
+		public static readonly string ProviderDescription = "Provider that works in lockstep w/ configuration-based AAD B2C SSO, allowing api token access for those users.";
 
-		public static readonly string ConfigurationItemDBConnectionString = "DBConnectionString";
+		public static readonly string ConfigurationItemOAuthWellKnownUri = "OAuthWellKnown";
+		public static readonly string ConfigurationItemDefaultTTL = "DefaultTTL";
 	}
 }
