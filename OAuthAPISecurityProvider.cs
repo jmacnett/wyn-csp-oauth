@@ -80,14 +80,20 @@ namespace OAuthAPISecurityProvider
 			Logger.Debug($"password: {password}");
 			Logger.Debug($"customizedParam: {customizedParam ?? "null"}");
 
-			string rawtoken = customizedParam != null ? (string)customizedParam.ToString() : "null";
-			Logger.Debug("rawtoken: " + rawtoken, customizedParam);
+			// this proceeds under the assumption that the posted value in customizedParam (which appears to follow name:value format) is named "accesstoken"
+			string rawtoken = null; 
+			if(customizedParam != null && customizedParam is Dictionary<string,string>)
+				rawtoken = ((Dictionary<string,string>)customizedParam)["accesstoken"];
+			Logger.Debug($"rawtoken: {(rawtoken ?? "null")}");
+
+			if(rawtoken == null)
+				throw new Exception("accesstoken value is required for oauth token generation");
 
 			// validate token
 			ClaimsPrincipal principal = null;
 
 			try {
-				principal = Validate(username);
+				principal = Validate(rawtoken);
 			}
 			catch(System.Exception ex){
 				// TBD: is it better to let the exception occur and let the caller know there's an error, 
