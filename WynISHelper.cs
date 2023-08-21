@@ -81,6 +81,7 @@ where provider_id = $1
 
             using(NpgsqlConnection conn = new NpgsqlConnection(WynISConnectionString))
             {
+                await conn.OpenAsync();
                 using(NpgsqlCommand cmd = new NpgsqlCommand(uiquery, conn))
                 {
                     cmd.Parameters.Add(new NpgsqlParameter() { Value = Consts.ProviderName });
@@ -179,8 +180,8 @@ from users u
 		on ur.role_id = r.id 
 	inner join tenants t 
 		on r.tenant_id  = t.id 
-where u.id = = $1'  
-"))
+where u.id = $1 
+", conn))
                     {
                         cmd.Parameters.Add(new NpgsqlParameter() { Value = userid });
 

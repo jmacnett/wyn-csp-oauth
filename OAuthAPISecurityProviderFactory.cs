@@ -26,6 +26,11 @@ namespace OAuthAPISecurityProvider
 				ValueType = ConfigurationItemValueType.Number,
 				Value = 3600
 			},
+			new ConfigurationItem(Consts.ConfigurationItemValidAudiences, "Valid AAD audience applications", "(optional, comma delimited) List of AAD app registrations that are allowed to call this endpoint.") {
+				Restriction = ConfigurationItemRestriction.Optional,
+				ValueType = ConfigurationItemValueType.Text,
+				Value = String.Empty
+			}
 		};
 
 		public Task<ISecurityProvider> CreateAsync(IEnumerable<ConfigurationItem> settings, ILogger logger)

@@ -1,0 +1,11 @@
+# NOTE:
+# Typically, you will want to use the "integration" client_id.  You can find your client secret (in the local k8s deployment) at:
+# http://localhost:30000/management#client-management
+
+POST /connect/token HTTP/1.1
+Accept: */*
+Content-Type: application/x-www-form-urlencoded
+Host: localhost:30000
+Content-Length: 228
+
+grant_type=password&client_id=integration&client_secret=%3Cyour%20client%20secret%20here%3E&accesstoken=%3Cyour%20wyn%20access%20token%20from%20aad%3E&provider=%3Cyour%20csp%20provider%20name%3E&username=novalue&password=novalue

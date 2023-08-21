@@ -28,5 +28,13 @@ namespace OAuthAPISecurityProvider
 		{
 			_logger?.LogError(e, msg, args);
 		}
+
+		/// <remarks>
+		/// One-off override for convenient console logging
+		/// </remarks>
+		public static void Exception(Exception ex)
+		{
+			_logger?.LogError($"[{ex.GetType().Name}]{ex.Message}{Environment.NewLine}{ex.StackTrace}",ex);
+		}
 	}
 }
