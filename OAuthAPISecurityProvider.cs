@@ -57,11 +57,7 @@ namespace OAuthAPISecurityProvider
 
 			// this proceeds under the assumption that the posted value in customizedParam (which appears to follow name:value format) is named "accesstoken"
 			string rawtoken = null; 
-<<<<<<< HEAD
-			if(customizedParam != null && customizedParam is Dictionary<string,string>)
-=======
 			if(customizedParam != null && customizedParam is Dictionary<string,string> && ((Dictionary<string,string>)customizedParam).ContainsKey("accesstoken"))
->>>>>>> scratch
 				rawtoken = ((Dictionary<string,string>)customizedParam)["accesstoken"];
 			Logger.Debug($"rawtoken: {(rawtoken ?? "null")}");
 
@@ -72,15 +68,11 @@ namespace OAuthAPISecurityProvider
 			string idp_oid = null;
 
 			try {
-<<<<<<< HEAD
-				principal = Validate(rawtoken);
-=======
 				JwtSecurityToken parsedToken = await OIDCUserInfoValidate.Validate(rawtoken);
 
 				Logger.Debug("Token validated!  Extracting idp_oid from JwtSecurityToken claims...");
 				idp_oid = parsedToken.Claims.First(r=> r.Type == "oid").Value;
 				Logger.Debug($"idp_oid: {idp_oid}");
->>>>>>> scratch
 			}
 			catch(System.Exception ex){
 				// TBD: will an unauthorized exception manifest to the user?
