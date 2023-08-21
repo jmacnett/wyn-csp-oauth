@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Protocols;
 using System.Threading;
-using System.ComponentModel;
 
 namespace OAuthAPISecurityProvider
 {
