@@ -13,7 +13,7 @@ build: version
 push: build
 	docker build . -t ${IMG}
 	docker push ${IMG}
-	lastversion
+	echo 'Repo and tag:' ${IMG}
 
 lastversion: 
 	echo 'Repo and tag:' ${IMG}
