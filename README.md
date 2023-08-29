@@ -7,7 +7,7 @@ As of Wyn Enterprise 7.0.00189.0, the k8s container is running dotnet 6.0.2; as 
 Packages of note that are required to be installed at a version outside of the latest available:
  - Microsoft.IdentityModel.Protocols.OpenIdConnect: 6.15.0
  - System.IdentityModel.Tokens.Jwt: 6.15.0
- - NpgSql: 6.0.9
+ - Npgsql: 6.0.7 -> note: this is very important, as any other version will conflict with the Npgsql libraries already loaded in the Wyn runtime.
  - System.Runtime.Caching: 6.0.0
 
 Also of note: if you're building a harness to test this locally and/or by including it in the Dockerfile, you will want to target "net6.0" while the above remains accurate.
