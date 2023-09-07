@@ -2,7 +2,7 @@
 The intent of this is to allow a loose passthrough of the de facto Wyn custom CSP implementation tailored towards AzureAD B2C OAuth access tokens, allowing users created in Wyn via an AAD SSO provider to request Wyn api tokens.
 
 ## Caveats
-As of Wyn Enterprise 7.0.00189.0, the k8s container is running dotnet 6.0.2; as a result, the highest installable level of several packages is lower than the latest available LTS from nuget.
+As of Wyn Enterprise 7, the k8s container is running dotnet 6.0.2; as a result, the highest installable level of several packages is lower than the latest available LTS from nuget.
 
 Packages of note that are required to be installed at a version outside of the latest available:
  - Microsoft.IdentityModel.Protocols.OpenIdConnect: 6.15.0
