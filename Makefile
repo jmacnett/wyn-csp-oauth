@@ -5,12 +5,16 @@ IMG=$(REPO):`cat version.txt`
 version:
 	sh mkversion.sh
 
-build: version
+# only for local testing w/ microk8s or other local k8s
+dotnet-build:
 	if [ -d bin/Debug/netstandard2.0/publish ]; then rm -rf bin/Debug/netstandard2.0/publish; fi
 	dotnet clean OAuthAPISecurityProvider.csproj
 	dotnet publish --sc true OAuthAPISecurityProvider.csproj
 
-push: build
+docker-build: version
+	docker build . -t ${IMG}
+
+push: docker-build
 	docker build . -t ${IMG}
 	docker push ${IMG}
 	echo 'Repo and tag:' ${IMG}
