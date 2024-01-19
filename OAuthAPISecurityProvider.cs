@@ -43,7 +43,8 @@ namespace OAuthAPISecurityProvider
 				be removed at your discretion, but is very helpful when attempting to troubleshoot instances while deployed in k8s.
 			*/
 			Logger.Debug($"username: {username}");
-			Logger.Debug($"password: {password}");
+			// uncomment as required, but should not be needed for this implementation
+			// Logger.Debug($"password: {password}");
 			Logger.Debug($"customizedParam: {customizedParam ?? "null"}");
 
 			// this proceeds under the assumption that the posted value in customizedParam (which appears to follow name:value format) is named "accesstoken"
@@ -123,8 +124,20 @@ namespace OAuthAPISecurityProvider
 		{
 			return Task.Run(() =>
 			{
-				WynISUser user = WynISUserTokenCache.Get(token);
-				return user != null ? user.Organizations.ToArray() : new string[0];
+				try 
+				{
+					Logger.Debug($"Getting user organizations for token: {token}");
+					WynISUser user = WynISUserTokenCache.Get(token);
+					Logger.Debug($"organization lookup for user: {(user != null ? user.id : "null")}");
+					Logger.Debug($"organizations: {(user != null ? string.Join(",", user.Organizations) : "null")}");
+					return user != null ? user.Organizations.ToArray() : new string[0];
+				}
+				catch(System.Exception ex) 
+				{
+					Logger.Debug("organization lookup exception:");
+					Logger.Exception(ex);
+					return new string[0];
+				}
 			});
 		}
 

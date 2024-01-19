@@ -13,6 +13,7 @@ namespace OAuthAPISecurityProvider
         public string role_name { get; set; }
         public string tenant_id { get; set; }
         public string tenant_name { get; set; }
+        public string tenant_path { get; set; }
     }
 
 	public class WynISUser : IExternalUserContext, IExternalUserDescriptor
@@ -59,7 +60,7 @@ namespace OAuthAPISecurityProvider
         public List<TenantRole> TenantRoles = new List<TenantRole>();
 
         public IEnumerable<string> Roles => TenantRoles.Select(r=> r.role_name).Distinct();
-        public IEnumerable<string> Organizations => TenantRoles.Select(r=> r.tenant_name).Distinct();
+        public IEnumerable<string> Organizations => TenantRoles.Select(r=> r.tenant_path).Distinct();
 
         public WynISUser() {}
     }

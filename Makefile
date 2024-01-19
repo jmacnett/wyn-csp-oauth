@@ -11,11 +11,10 @@ dotnet-build:
 	dotnet clean OAuthAPISecurityProvider.csproj
 	dotnet publish --sc true OAuthAPISecurityProvider.csproj
 
-docker-build: version
-	docker build . -t ${IMG}
+build: version
+	env DOCKER_BUILDKIT=1 docker build . -t ${IMG}
 
-push: docker-build
-	docker build . -t ${IMG}
+push: build
 	docker push ${IMG}
 	echo 'Repo and tag:' ${IMG}
 

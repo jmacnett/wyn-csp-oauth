@@ -165,12 +165,13 @@ where provider_id = $1
                     foreach(var kvp in tempProps)
                         toRet.UserContext[kvp.Key] = kvp.Value.ToArray();
 
-                    // grab roles, organizations
+                                       // grab roles, organizations
                     using(NpgsqlCommand cmd = new NpgsqlCommand(@"
 select ur.role_id 
 	,r.""name"" as role_name
 	,r.tenant_id
 	,t.""name"" as tenant_name
+    ,t.""path"" as tenant_path
 from users u
 	inner join user_roles ur
 		on u.id  = ur.user_id 
@@ -189,16 +190,27 @@ where u.id = $1
                             int ord_role_name = rdr.GetOrdinal("role_name");
                             int ord_tenant_id = rdr.GetOrdinal("tenant_id");
                             int ord_tenant_name = rdr.GetOrdinal("tenant_name");
+                            int ord_tenant_path = rdr.GetOrdinal("tenant_path");
                             while(rdr.Read())
                                 toRet.TenantRoles.Add(new TenantRole
                                 {
                                     role_id = rdr.GetString(ord_role_id),
                                     role_name = rdr.GetString(ord_role_name),
                                     tenant_id = rdr.GetString(ord_tenant_id),
-                                    tenant_name = rdr.GetString(ord_tenant_name)
+                                    tenant_name = rdr.GetString(ord_tenant_name),
+                                    tenant_path = rdr.GetString(ord_tenant_path)
                                 });
                         }    
                     }
+                    /* Note: there is a potentially seperate way of getting the organizations/tenants for a user,
+                    via the user_tenants table; however, the list of organizations in that collection is not affected
+                    by disassociating all roles for the organization from a user (and the role-joined version is),
+                    so to avoid leaks, we're ignoring user_tenants for now.
+
+                    It's worth noting that users created within an org as local accounts presumably use this information
+                    without a role, which leads one to suspect the baseline provider DOES use that table somehow, but
+                    given how we're controlling access, this is a sufficient list.
+                    */
                     
                 }
             }
